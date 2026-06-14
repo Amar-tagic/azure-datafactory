@@ -1,0 +1,15 @@
+{
+	"name": "adf-amarazureproject",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "0c1dd637-2798-4a5b-8364-f6dfec1dbe81",
+		"tenantId": "2b9973fa-4ead-4708-9d54-e1c44779ee59"
+	}
+}
