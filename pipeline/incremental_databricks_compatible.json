@@ -81,11 +81,11 @@
 									"parameters": {
 										"container": "bronze",
 										"folder": {
-											"value": "@{item().table}_cdc",
+											"value": "@{item().table}",
 											"type": "Expression"
 										},
 										"file": {
-											"value": "@concat(item().table,'_',variables('current'))",
+											"value": "@{item().table}",
 											"type": "Expression"
 										}
 									}
@@ -122,7 +122,7 @@
 									"parameters": {
 										"container": "bronze",
 										"folder": {
-											"value": "@{item().table}_cdc",
+											"value": "@{item().table}",
 											"type": "Expression"
 										},
 										"file": "cdc.json"
@@ -185,11 +185,11 @@
 												"parameters": {
 													"container": "bronze",
 													"folder": {
-														"value": "@{item().table}_cdc",
+														"value": "@{item().table}",
 														"type": "Expression"
 													},
 													"file": {
-														"value": "@concat(item().table,'_',variables('current'))",
+														"value": "@{item().table}",
 														"type": "Expression"
 													}
 												}
@@ -262,7 +262,7 @@
 												"parameters": {
 													"container": "bronze",
 													"folder": {
-														"value": "@{item().table}_cdc",
+														"value": "@{item().table}",
 														"type": "Expression"
 													},
 													"file": "empty.json"
@@ -276,7 +276,7 @@
 												"parameters": {
 													"container": "bronze",
 													"folder": {
-														"value": "@{item().table}_cdc",
+														"value": "@{item().table}",
 														"type": "Expression"
 													},
 													"file": "cdc.json"
