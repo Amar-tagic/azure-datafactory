@@ -17,8 +17,6 @@
 						{
 							"name": "AzureSqlToLake",
 							"type": "Copy",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "last_cdc",
@@ -153,8 +151,6 @@
 						{
 							"name": "If_incremental_load",
 							"type": "IfCondition",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "AzureSqlToLake",
