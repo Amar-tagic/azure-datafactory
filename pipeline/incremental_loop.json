@@ -326,13 +326,7 @@
 				"defaultValue": [
 					{
 						"schema": "dbo",
-						"table": "DimUser",
-						"cdc_col": "updated_at",
-						"from_date": ""
-					},
-					{
-						"schema": "dbo",
-						"table": "DimTrack",
+						"table": "DimArtist",
 						"cdc_col": "updated_at",
 						"from_date": ""
 					},
@@ -344,7 +338,13 @@
 					},
 					{
 						"schema": "dbo",
-						"table": "DimArtist",
+						"table": "DimTrack",
+						"cdc_col": "updated_at",
+						"from_date": ""
+					},
+					{
+						"schema": "dbo",
+						"table": "DimUser",
 						"cdc_col": "updated_at",
 						"from_date": ""
 					},
