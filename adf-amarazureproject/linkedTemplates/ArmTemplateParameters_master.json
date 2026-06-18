@@ -5,28 +5,13 @@
 		"factoryName": {
 			"value": "adf-amarazureproject"
 		},
-		"AzureDataLakeStorage1_accountKey": {
-			"value": ""
-		},
-		"AzureSqlDatabase1_password": {
-			"value": ""
-		},
 		"AzureBlobStorage1_connectionString": {
-			"value": ""
-		},
-		"AzureSalesConnect_password": {
-			"value": ""
-		},
-		"AzureInvoiceConnect_password": {
 			"value": ""
 		},
 		"AzureBlobStorage2_connectionString": {
 			"value": ""
 		},
-		"csv_read_datalake_accountKey": {
-			"value": ""
-		},
-		"product_sales_read_accountKey": {
+		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
 		"AzureDataLakeStorage2_accountKey": {
@@ -35,16 +20,37 @@
 		"AzureDataLakeStorage3_accountKey": {
 			"value": ""
 		},
+		"AzureInvoiceConnect_password": {
+			"value": ""
+		},
+		"AzureSalesConnect_password": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_password": {
+			"value": ""
+		},
+		"csv_read_datalake_accountKey": {
+			"value": ""
+		},
+		"product_sales_read_accountKey": {
+			"value": ""
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://storageamarazureproject.dfs.core.windows.net/"
 		},
-		"AzureSqlDatabase1_properties_typeProperties_server": {
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"value": "https://storageamarazureproject.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage3_properties_typeProperties_url": {
+			"value": "https://storageamarazureproject.dfs.core.windows.net/"
+		},
+		"AzureInvoiceConnect_properties_typeProperties_server": {
 			"value": "sql-srv-amarazureproject.database.windows.net"
 		},
-		"AzureSqlDatabase1_properties_typeProperties_database": {
-			"value": "db-amarazureproject"
+		"AzureInvoiceConnect_properties_typeProperties_database": {
+			"value": "Invoice_db"
 		},
-		"AzureSqlDatabase1_properties_typeProperties_userName": {
+		"AzureInvoiceConnect_properties_typeProperties_userName": {
 			"value": "amar.tagic"
 		},
 		"AzureSalesConnect_properties_typeProperties_server": {
@@ -56,13 +62,13 @@
 		"AzureSalesConnect_properties_typeProperties_userName": {
 			"value": "amar.tagic"
 		},
-		"AzureInvoiceConnect_properties_typeProperties_server": {
+		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"value": "sql-srv-amarazureproject.database.windows.net"
 		},
-		"AzureInvoiceConnect_properties_typeProperties_database": {
-			"value": "Invoice_db"
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "db-amarazureproject"
 		},
-		"AzureInvoiceConnect_properties_typeProperties_userName": {
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
 			"value": "amar.tagic"
 		},
 		"csv_read_datalake_properties_typeProperties_url": {
@@ -71,11 +77,8 @@
 		"product_sales_read_properties_typeProperties_url": {
 			"value": "https://storageamarazureproject.dfs.core.windows.net/"
 		},
-		"AzureDataLakeStorage2_properties_typeProperties_url": {
-			"value": "https://storageamarazureproject.dfs.core.windows.net/"
-		},
-		"AzureDataLakeStorage3_properties_typeProperties_url": {
-			"value": "https://storageamarazureproject.dfs.core.windows.net/"
+		"triggerjoin_properties_typeProperties_scope": {
+			"value": "/subscriptions/a415c409-808a-467a-a4ac-d1a5ae732b8f/resourceGroups/RG-adf-practice/providers/Microsoft.Storage/storageAccounts/storageamarazureproject"
 		},
 		"containerUri": {
 			"value": ""
