@@ -2198,12 +2198,20 @@
 			"properties": {
 				"annotations": [],
 				"runtimeState": "Stopped",
-				"pipelines": [],
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pipelinejoinjson",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
 					"blobPathBeginsWith": "/salescsv/blobs/csvin",
 					"blobPathEndsWith": "csvin",
-					"ignoreEmptyBlobs": false,
+					"ignoreEmptyBlobs": true,
 					"scope": "[parameters('triggerjson_properties_typeProperties_scope')]",
 					"events": [
 						"Microsoft.Storage.BlobCreated",
@@ -2211,7 +2219,9 @@
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipelinejoinjson')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/triggerjoin')]",
@@ -2705,36 +2715,6 @@
 				"[concat(variables('factoryId'), '/datasets/AzureSalesOrder')]",
 				"[concat(variables('factoryId'), '/datasets/Jsonjoinoutput')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trigjson')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "pipelinejoinjson",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Minute",
-						"interval": 1,
-						"startTime": "2026-06-18T18:18:00",
-						"timeZone": "India Standard Time"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipelinejoinjson')]"
 			]
 		}
 	]
