@@ -15,6 +15,38 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
 		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"AzureSalesConnect_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSalesConnect'"
+		},
+		"AzureInvoiceConnect_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureInvoiceConnect'"
+		},
+		"AzureBlobStorage2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
+		},
+		"csv_read_datalake_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'csv_read_datalake'"
+		},
+		"product_sales_read_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'product_sales_read'"
+		},
+		"AzureDataLakeStorage2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage2'"
+		},
+		"AzureDataLakeStorage3_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage3'"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storageamarazureproject.dfs.core.windows.net/"
@@ -30,6 +62,46 @@
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "amar.tagic"
+		},
+		"AzureSalesConnect_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-srv-amarazureproject.database.windows.net"
+		},
+		"AzureSalesConnect_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "classicmodels"
+		},
+		"AzureSalesConnect_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "amar.tagic"
+		},
+		"AzureInvoiceConnect_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-srv-amarazureproject.database.windows.net"
+		},
+		"AzureInvoiceConnect_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "Invoice_db"
+		},
+		"AzureInvoiceConnect_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "amar.tagic"
+		},
+		"csv_read_datalake_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageamarazureproject.dfs.core.windows.net/"
+		},
+		"product_sales_read_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageamarazureproject.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageamarazureproject.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage3_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageamarazureproject.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -64,6 +136,30 @@
 					"AzureSqlDatabase1_password": {
 						"value": "[parameters('AzureSqlDatabase1_password')]"
 					},
+					"AzureBlobStorage1_connectionString": {
+						"value": "[parameters('AzureBlobStorage1_connectionString')]"
+					},
+					"AzureSalesConnect_password": {
+						"value": "[parameters('AzureSalesConnect_password')]"
+					},
+					"AzureInvoiceConnect_password": {
+						"value": "[parameters('AzureInvoiceConnect_password')]"
+					},
+					"AzureBlobStorage2_connectionString": {
+						"value": "[parameters('AzureBlobStorage2_connectionString')]"
+					},
+					"csv_read_datalake_accountKey": {
+						"value": "[parameters('csv_read_datalake_accountKey')]"
+					},
+					"product_sales_read_accountKey": {
+						"value": "[parameters('product_sales_read_accountKey')]"
+					},
+					"AzureDataLakeStorage2_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage2_accountKey')]"
+					},
+					"AzureDataLakeStorage3_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage3_accountKey')]"
+					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
@@ -75,10 +171,60 @@
 					},
 					"AzureSqlDatabase1_properties_typeProperties_userName": {
 						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
+					},
+					"AzureSalesConnect_properties_typeProperties_server": {
+						"value": "[parameters('AzureSalesConnect_properties_typeProperties_server')]"
+					},
+					"AzureSalesConnect_properties_typeProperties_database": {
+						"value": "[parameters('AzureSalesConnect_properties_typeProperties_database')]"
+					},
+					"AzureSalesConnect_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSalesConnect_properties_typeProperties_userName')]"
+					},
+					"AzureInvoiceConnect_properties_typeProperties_server": {
+						"value": "[parameters('AzureInvoiceConnect_properties_typeProperties_server')]"
+					},
+					"AzureInvoiceConnect_properties_typeProperties_database": {
+						"value": "[parameters('AzureInvoiceConnect_properties_typeProperties_database')]"
+					},
+					"AzureInvoiceConnect_properties_typeProperties_userName": {
+						"value": "[parameters('AzureInvoiceConnect_properties_typeProperties_userName')]"
+					},
+					"csv_read_datalake_properties_typeProperties_url": {
+						"value": "[parameters('csv_read_datalake_properties_typeProperties_url')]"
+					},
+					"product_sales_read_properties_typeProperties_url": {
+						"value": "[parameters('product_sales_read_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStorage2_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStorage3_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage3_properties_typeProperties_url')]"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "adf-amarazureproject_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-amarazureproject_ArmTemplate_0')]"
+			]
 		}
 	]
 }

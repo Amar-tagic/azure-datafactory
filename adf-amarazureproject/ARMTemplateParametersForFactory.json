@@ -11,6 +11,30 @@
 		"AzureSqlDatabase1_password": {
 			"value": ""
 		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureSalesConnect_password": {
+			"value": ""
+		},
+		"AzureInvoiceConnect_password": {
+			"value": ""
+		},
+		"AzureBlobStorage2_connectionString": {
+			"value": ""
+		},
+		"csv_read_datalake_accountKey": {
+			"value": ""
+		},
+		"product_sales_read_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage2_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage3_accountKey": {
+			"value": ""
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://storageamarazureproject.dfs.core.windows.net/"
 		},
@@ -22,6 +46,36 @@
 		},
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
 			"value": "amar.tagic"
+		},
+		"AzureSalesConnect_properties_typeProperties_server": {
+			"value": "sql-srv-amarazureproject.database.windows.net"
+		},
+		"AzureSalesConnect_properties_typeProperties_database": {
+			"value": "classicmodels"
+		},
+		"AzureSalesConnect_properties_typeProperties_userName": {
+			"value": "amar.tagic"
+		},
+		"AzureInvoiceConnect_properties_typeProperties_server": {
+			"value": "sql-srv-amarazureproject.database.windows.net"
+		},
+		"AzureInvoiceConnect_properties_typeProperties_database": {
+			"value": "Invoice_db"
+		},
+		"AzureInvoiceConnect_properties_typeProperties_userName": {
+			"value": "amar.tagic"
+		},
+		"csv_read_datalake_properties_typeProperties_url": {
+			"value": "https://storageamarazureproject.dfs.core.windows.net/"
+		},
+		"product_sales_read_properties_typeProperties_url": {
+			"value": "https://storageamarazureproject.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"value": "https://storageamarazureproject.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage3_properties_typeProperties_url": {
+			"value": "https://storageamarazureproject.dfs.core.windows.net/"
 		}
 	}
 }

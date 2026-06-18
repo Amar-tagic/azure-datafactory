@@ -15,6 +15,38 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
 		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"AzureSalesConnect_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSalesConnect'"
+		},
+		"AzureInvoiceConnect_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureInvoiceConnect'"
+		},
+		"AzureBlobStorage2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
+		},
+		"csv_read_datalake_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'csv_read_datalake'"
+		},
+		"product_sales_read_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'product_sales_read'"
+		},
+		"AzureDataLakeStorage2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage2'"
+		},
+		"AzureDataLakeStorage3_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage3'"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storageamarazureproject.dfs.core.windows.net/"
@@ -30,6 +62,46 @@
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "amar.tagic"
+		},
+		"AzureSalesConnect_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-srv-amarazureproject.database.windows.net"
+		},
+		"AzureSalesConnect_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "classicmodels"
+		},
+		"AzureSalesConnect_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "amar.tagic"
+		},
+		"AzureInvoiceConnect_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-srv-amarazureproject.database.windows.net"
+		},
+		"AzureInvoiceConnect_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "Invoice_db"
+		},
+		"AzureInvoiceConnect_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "amar.tagic"
+		},
+		"csv_read_datalake_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageamarazureproject.dfs.core.windows.net/"
+		},
+		"product_sales_read_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageamarazureproject.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageamarazureproject.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage3_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageamarazureproject.dfs.core.windows.net/"
 		}
 	},
 	"variables": {
@@ -76,6 +148,186 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntime1')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "Southeast Asia",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 10,
+							"cleanup": false,
+							"customProperties": []
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntimeAzure')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 10,
+							"cleanup": false,
+							"customProperties": []
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSalesConnect')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AzureSalesConnect_properties_typeProperties_server')]",
+					"database": "[parameters('AzureSalesConnect_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AzureSalesConnect_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AzureSalesConnect_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureInvoiceConnect')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AzureInvoiceConnect_properties_typeProperties_server')]",
+					"database": "[parameters('AzureInvoiceConnect_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AzureInvoiceConnect_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AzureInvoiceConnect_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage2_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/csv_read_datalake')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('csv_read_datalake_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('csv_read_datalake_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/product_sales_read')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('product_sales_read_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('product_sales_read_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage2_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage3')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage3_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage3_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSql')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -95,24 +347,6 @@
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -221,1093 +455,122 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/incremental_databricks_compatible')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/AzureSalesdb')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@pipeline().parameters.loop_input",
-								"type": "Expression"
-							},
-							"isSequential": true,
-							"activities": [
-								{
-									"name": "AzureSqlToLake",
-									"type": "Copy",
-									"dependsOn": [
-										{
-											"activity": "last_cdc",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										},
-										{
-											"activity": "current",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "AzureSqlSource",
-											"sqlReaderQuery": {
-												"value": "select * from @{item().schema}.@{item().table} where @{item().cdc_col} > '@{if(empty(item().from_date),activity('last_cdc').output.value[0].cdc,item().from_date)}' ",
-												"type": "Expression"
-											},
-											"queryTimeout": "02:00:00",
-											"partitionOption": "None"
-										},
-										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "ParquetWriteSettings"
-											}
-										},
-										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "AzureSql",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "Parquet_dynamic",
-											"type": "DatasetReference",
-											"parameters": {
-												"container": "bronze",
-												"folder": {
-													"value": "@{item().table}",
-													"type": "Expression"
-												},
-												"file": {
-													"value": "@{item().table}",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								},
-								{
-									"name": "last_cdc",
-									"type": "Lookup",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "JsonSource",
-											"storeSettings": {
-												"type": "AzureBlobFSReadSettings",
-												"recursive": true,
-												"enablePartitionDiscovery": false
-											},
-											"formatSettings": {
-												"type": "JsonReadSettings"
-											}
-										},
-										"dataset": {
-											"referenceName": "Json_dynamic",
-											"type": "DatasetReference",
-											"parameters": {
-												"container": "bronze",
-												"folder": {
-													"value": "@{item().table}",
-													"type": "Expression"
-												},
-												"file": "cdc.json"
-											}
-										},
-										"firstRowOnly": false
-									}
-								},
-								{
-									"name": "current",
-									"type": "SetVariable",
-									"dependsOn": [],
-									"policy": {
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "current",
-										"value": {
-											"value": "@utcNow()",
-											"type": "Expression"
-										}
-									}
-								},
-								{
-									"name": "If_incremental_load",
-									"type": "IfCondition",
-									"dependsOn": [
-										{
-											"activity": "AzureSqlToLake",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"expression": {
-											"value": "@greater(activity('AzureSqlToLake').output.dataRead,0 )",
-											"type": "Expression"
-										},
-										"ifFalseActivities": [
-											{
-												"name": "DeletEmptyFile",
-												"type": "Delete",
-												"dependsOn": [],
-												"policy": {
-													"timeout": "0.12:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"dataset": {
-														"referenceName": "Parquet_dynamic",
-														"type": "DatasetReference",
-														"parameters": {
-															"container": "bronze",
-															"folder": {
-																"value": "@{item().table}",
-																"type": "Expression"
-															},
-															"file": {
-																"value": "@{item().table}",
-																"type": "Expression"
-															}
-														}
-													},
-													"enableLogging": false,
-													"storeSettings": {
-														"type": "AzureBlobFSReadSettings",
-														"recursive": true,
-														"enablePartitionDiscovery": false
-													}
-												}
-											}
-										],
-										"ifTrueActivities": [
-											{
-												"name": "update_last_cdc",
-												"type": "Copy",
-												"dependsOn": [
-													{
-														"activity": "max_cdc",
-														"dependencyConditions": [
-															"Succeeded"
-														]
-													}
-												],
-												"policy": {
-													"timeout": "0.12:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"source": {
-														"type": "JsonSource",
-														"additionalColumns": [
-															{
-																"name": "cdc",
-																"value": {
-																	"value": "@activity('max_cdc').output.resultSets[0].rows[0].cdc",
-																	"type": "Expression"
-																}
-															}
-														],
-														"storeSettings": {
-															"type": "AzureBlobFSReadSettings",
-															"recursive": true,
-															"enablePartitionDiscovery": false
-														},
-														"formatSettings": {
-															"type": "JsonReadSettings"
-														}
-													},
-													"sink": {
-														"type": "JsonSink",
-														"storeSettings": {
-															"type": "AzureBlobFSWriteSettings"
-														},
-														"formatSettings": {
-															"type": "JsonWriteSettings"
-														}
-													},
-													"enableStaging": false
-												},
-												"inputs": [
-													{
-														"referenceName": "Json_dynamic",
-														"type": "DatasetReference",
-														"parameters": {
-															"container": "bronze",
-															"folder": {
-																"value": "@{item().table}",
-																"type": "Expression"
-															},
-															"file": "empty.json"
-														}
-													}
-												],
-												"outputs": [
-													{
-														"referenceName": "Json_dynamic",
-														"type": "DatasetReference",
-														"parameters": {
-															"container": "bronze",
-															"folder": {
-																"value": "@{item().table}",
-																"type": "Expression"
-															},
-															"file": "cdc.json"
-														}
-													}
-												]
-											},
-											{
-												"name": "max_cdc",
-												"type": "Script",
-												"dependsOn": [],
-												"policy": {
-													"timeout": "0.12:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"linkedServiceName": {
-													"referenceName": "AzureSqlDatabase1",
-													"type": "LinkedServiceReference"
-												},
-												"typeProperties": {
-													"scripts": [
-														{
-															"type": "Query",
-															"text": {
-																"value": "select max(@{item().cdc_col}) as cdc from @{item().schema}.@{item().table}",
-																"type": "Expression"
-															}
-														}
-													],
-													"scriptBlockExecutionTimeout": "02:00:00"
-												}
-											}
-										]
-									}
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
+				"linkedServiceName": {
+					"referenceName": "AzureSalesConnect",
+					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"loop_input": {
-						"type": "array",
-						"defaultValue": [
-							{
-								"schema": "dbo",
-								"table": "DimArtist",
-								"cdc_col": "updated_at",
-								"from_date": ""
-							},
-							{
-								"schema": "dbo",
-								"table": "DimDate",
-								"cdc_col": "date",
-								"from_date": ""
-							},
-							{
-								"schema": "dbo",
-								"table": "DimTrack",
-								"cdc_col": "updated_at",
-								"from_date": ""
-							},
-							{
-								"schema": "dbo",
-								"table": "DimUser",
-								"cdc_col": "updated_at",
-								"from_date": ""
-							},
-							{
-								"schema": "dbo",
-								"table": "FactStream",
-								"cdc_col": "stream_timestamp",
-								"from_date": ""
-							}
-						]
-					}
-				},
-				"variables": {
-					"current": {
-						"type": "String"
-					}
-				},
-				"annotations": []
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "customers"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSql')]",
-				"[concat(variables('factoryId'), '/datasets/Parquet_dynamic')]",
-				"[concat(variables('factoryId'), '/datasets/Json_dynamic')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureSalesConnect')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/incremental_load')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/AzureInvoicedb')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "AzureSqlToLake",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "last_cdc",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
-								"activity": "current",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "select * from @{pipeline().parameters.schema}.@{pipeline().parameters.table} where @{pipeline().parameters.cdc_col} > '@{if(empty(pipeline().parameters.from_date),activity('last_cdc').output.value[0].cdc,pipeline().parameters.from_date)}' ",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "ParquetWriteSettings"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSql",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Parquet_dynamic",
-								"type": "DatasetReference",
-								"parameters": {
-									"container": "bronze",
-									"folder": "user",
-									"file": {
-										"value": "@concat(pipeline().parameters.table,'_',variables('current'))",
-										"type": "Expression"
-									}
-								}
-							}
-						]
-					},
-					{
-						"name": "last_cdc",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "JsonSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "JsonReadSettings"
-								}
-							},
-							"dataset": {
-								"referenceName": "Json_dynamic",
-								"type": "DatasetReference",
-								"parameters": {
-									"container": "bronze",
-									"folder": {
-										"value": "@{pipeline().parameters.table}_cdc",
-										"type": "Expression"
-									},
-									"file": "cdc.json"
-								}
-							},
-							"firstRowOnly": false
-						}
-					},
-					{
-						"name": "current",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "current",
-							"value": {
-								"value": "@utcNow()",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "If_incremental_load",
-						"type": "IfCondition",
-						"dependsOn": [
-							{
-								"activity": "AzureSqlToLake",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@greater(activity('AzureSqlToLake').output.dataRead,0 )",
-								"type": "Expression"
-							},
-							"ifFalseActivities": [
-								{
-									"name": "DeletEmptyFile",
-									"type": "Delete",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"dataset": {
-											"referenceName": "Parquet_dynamic",
-											"type": "DatasetReference",
-											"parameters": {
-												"container": "bronze",
-												"folder": {
-													"value": "@pipeline().parameters.table",
-													"type": "Expression"
-												},
-												"file": "@concat(pipeline().parameters.table,'_',variables('current'))"
-											}
-										},
-										"enableLogging": false,
-										"storeSettings": {
-											"type": "AzureBlobFSReadSettings",
-											"recursive": true,
-											"enablePartitionDiscovery": false
-										}
-									}
-								}
-							],
-							"ifTrueActivities": [
-								{
-									"name": "update_last_cdc",
-									"type": "Copy",
-									"dependsOn": [
-										{
-											"activity": "max_cdc",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "JsonSource",
-											"additionalColumns": [
-												{
-													"name": "cdc",
-													"value": {
-														"value": "@activity('max_cdc').output.resultSets[0].rows[0].cdc",
-														"type": "Expression"
-													}
-												}
-											],
-											"storeSettings": {
-												"type": "AzureBlobFSReadSettings",
-												"recursive": true,
-												"enablePartitionDiscovery": false
-											},
-											"formatSettings": {
-												"type": "JsonReadSettings"
-											}
-										},
-										"sink": {
-											"type": "JsonSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "JsonWriteSettings"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "Json_dynamic",
-											"type": "DatasetReference",
-											"parameters": {
-												"container": "bronze",
-												"folder": {
-													"value": "@{pipeline().parameters.table}_cdc",
-													"type": "Expression"
-												},
-												"file": "empty.json"
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "Json_dynamic",
-											"type": "DatasetReference",
-											"parameters": {
-												"container": "bronze",
-												"folder": "cdc",
-												"file": "cdc.json"
-											}
-										}
-									]
-								},
-								{
-									"name": "max_cdc",
-									"type": "Script",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"linkedServiceName": {
-										"referenceName": "AzureSqlDatabase1",
-										"type": "LinkedServiceReference"
-									},
-									"typeProperties": {
-										"scripts": [
-											{
-												"type": "Query",
-												"text": {
-													"value": "select max(@{pipeline().parameters.cdc_col}) as cdc from @{pipeline().parameters.schema}.@{pipeline().parameters.table}",
-													"type": "Expression"
-												}
-											}
-										],
-										"scriptBlockExecutionTimeout": "02:00:00"
-									}
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
+				"linkedServiceName": {
+					"referenceName": "AzureInvoiceConnect",
+					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"schema": {
-						"type": "string"
-					},
-					"table": {
-						"type": "string"
-					},
-					"cdc_col": {
-						"type": "string"
-					},
-					"from_date": {
-						"type": "string"
-					}
-				},
-				"variables": {
-					"current": {
-						"type": "String"
-					}
-				},
-				"annotations": []
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSql')]",
-				"[concat(variables('factoryId'), '/datasets/Parquet_dynamic')]",
-				"[concat(variables('factoryId'), '/datasets/Json_dynamic')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureInvoiceConnect')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/incremental_loop')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@pipeline().parameters.loop_input",
-								"type": "Expression"
-							},
-							"isSequential": true,
-							"activities": [
-								{
-									"name": "AzureSqlToLake",
-									"type": "Copy",
-									"dependsOn": [
-										{
-											"activity": "last_cdc",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										},
-										{
-											"activity": "current",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "AzureSqlSource",
-											"sqlReaderQuery": {
-												"value": "select * from @{item().schema}.@{item().table} where @{item().cdc_col} > '@{if(empty(item().from_date),activity('last_cdc').output.value[0].cdc,item().from_date)}' ",
-												"type": "Expression"
-											},
-											"queryTimeout": "02:00:00",
-											"partitionOption": "None"
-										},
-										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "ParquetWriteSettings"
-											}
-										},
-										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "AzureSql",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "Parquet_dynamic",
-											"type": "DatasetReference",
-											"parameters": {
-												"container": "bronze",
-												"folder": {
-													"value": "@{item().table}_cdc",
-													"type": "Expression"
-												},
-												"file": {
-													"value": "@concat(item().table,'_',variables('current'))",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								},
-								{
-									"name": "last_cdc",
-									"type": "Lookup",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "JsonSource",
-											"storeSettings": {
-												"type": "AzureBlobFSReadSettings",
-												"recursive": true,
-												"enablePartitionDiscovery": false
-											},
-											"formatSettings": {
-												"type": "JsonReadSettings"
-											}
-										},
-										"dataset": {
-											"referenceName": "Json_dynamic",
-											"type": "DatasetReference",
-											"parameters": {
-												"container": "bronze",
-												"folder": {
-													"value": "@{item().table}_cdc",
-													"type": "Expression"
-												},
-												"file": "cdc.json"
-											}
-										},
-										"firstRowOnly": false
-									}
-								},
-								{
-									"name": "current",
-									"type": "SetVariable",
-									"dependsOn": [],
-									"policy": {
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "current",
-										"value": {
-											"value": "@utcNow()",
-											"type": "Expression"
-										}
-									}
-								},
-								{
-									"name": "If_incremental_load",
-									"type": "IfCondition",
-									"dependsOn": [
-										{
-											"activity": "AzureSqlToLake",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"expression": {
-											"value": "@greater(activity('AzureSqlToLake').output.dataRead,0 )",
-											"type": "Expression"
-										},
-										"ifFalseActivities": [
-											{
-												"name": "DeletEmptyFile",
-												"type": "Delete",
-												"dependsOn": [],
-												"policy": {
-													"timeout": "0.12:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"dataset": {
-														"referenceName": "Parquet_dynamic",
-														"type": "DatasetReference",
-														"parameters": {
-															"container": "bronze",
-															"folder": {
-																"value": "@{item().table}_cdc",
-																"type": "Expression"
-															},
-															"file": {
-																"value": "@concat(item().table,'_',variables('current'))",
-																"type": "Expression"
-															}
-														}
-													},
-													"enableLogging": false,
-													"storeSettings": {
-														"type": "AzureBlobFSReadSettings",
-														"recursive": true,
-														"enablePartitionDiscovery": false
-													}
-												}
-											}
-										],
-										"ifTrueActivities": [
-											{
-												"name": "update_last_cdc",
-												"type": "Copy",
-												"dependsOn": [
-													{
-														"activity": "max_cdc",
-														"dependencyConditions": [
-															"Succeeded"
-														]
-													}
-												],
-												"policy": {
-													"timeout": "0.12:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"source": {
-														"type": "JsonSource",
-														"additionalColumns": [
-															{
-																"name": "cdc",
-																"value": {
-																	"value": "@activity('max_cdc').output.resultSets[0].rows[0].cdc",
-																	"type": "Expression"
-																}
-															}
-														],
-														"storeSettings": {
-															"type": "AzureBlobFSReadSettings",
-															"recursive": true,
-															"enablePartitionDiscovery": false
-														},
-														"formatSettings": {
-															"type": "JsonReadSettings"
-														}
-													},
-													"sink": {
-														"type": "JsonSink",
-														"storeSettings": {
-															"type": "AzureBlobFSWriteSettings"
-														},
-														"formatSettings": {
-															"type": "JsonWriteSettings"
-														}
-													},
-													"enableStaging": false
-												},
-												"inputs": [
-													{
-														"referenceName": "Json_dynamic",
-														"type": "DatasetReference",
-														"parameters": {
-															"container": "bronze",
-															"folder": {
-																"value": "@{item().table}_cdc",
-																"type": "Expression"
-															},
-															"file": "empty.json"
-														}
-													}
-												],
-												"outputs": [
-													{
-														"referenceName": "Json_dynamic",
-														"type": "DatasetReference",
-														"parameters": {
-															"container": "bronze",
-															"folder": {
-																"value": "@{item().table}_cdc",
-																"type": "Expression"
-															},
-															"file": "cdc.json"
-														}
-													}
-												]
-											},
-											{
-												"name": "max_cdc",
-												"type": "Script",
-												"dependsOn": [],
-												"policy": {
-													"timeout": "0.12:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"linkedServiceName": {
-													"referenceName": "AzureSqlDatabase1",
-													"type": "LinkedServiceReference"
-												},
-												"typeProperties": {
-													"scripts": [
-														{
-															"type": "Query",
-															"text": {
-																"value": "select max(@{item().cdc_col}) as cdc from @{item().schema}.@{item().table}",
-																"type": "Expression"
-															}
-														}
-													],
-													"scriptBlockExecutionTimeout": "02:00:00"
-												}
-											}
-										]
-									}
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage2",
+					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"loop_input": {
-						"type": "array",
-						"defaultValue": [
-							{
-								"schema": "dbo",
-								"table": "DimArtist",
-								"cdc_col": "updated_at",
-								"from_date": ""
-							},
-							{
-								"schema": "dbo",
-								"table": "DimDate",
-								"cdc_col": "date",
-								"from_date": ""
-							},
-							{
-								"schema": "dbo",
-								"table": "DimTrack",
-								"cdc_col": "updated_at",
-								"from_date": ""
-							},
-							{
-								"schema": "dbo",
-								"table": "DimUser",
-								"cdc_col": "updated_at",
-								"from_date": ""
-							},
-							{
-								"schema": "dbo",
-								"table": "FactStream",
-								"cdc_col": "stream_timestamp",
-								"from_date": ""
-							}
-						]
-					}
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "csvoutput",
+						"container": "salescsv"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
 				},
-				"variables": {
-					"current": {
-						"type": "String"
-					}
-				},
-				"annotations": []
+				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSql')]",
-				"[concat(variables('factoryId'), '/datasets/Parquet_dynamic')]",
-				"[concat(variables('factoryId'), '/datasets/Json_dynamic')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSalesOrder')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSalesConnect",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "orderNumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "orderDate",
+						"type": "date"
+					},
+					{
+						"name": "requiredDate",
+						"type": "date"
+					},
+					{
+						"name": "shippedDate",
+						"type": "date"
+					},
+					{
+						"name": "status",
+						"type": "varchar"
+					},
+					{
+						"name": "comments",
+						"type": "varchar"
+					},
+					{
+						"name": "customerNumber",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "orders"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSalesConnect')]"
 			]
 		}
 	]
