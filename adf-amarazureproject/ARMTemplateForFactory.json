@@ -2716,6 +2716,38 @@
 				"[concat(variables('factoryId'), '/datasets/Jsonjoinoutput')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/triggertumbling')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipeline": {
+					"pipelineReference": {
+						"referenceName": "pipelineaggregate",
+						"type": "PipelineReference"
+					},
+					"parameters": {}
+				},
+				"type": "TumblingWindowTrigger",
+				"typeProperties": {
+					"frequency": "Hour",
+					"interval": 6,
+					"startTime": "2026-06-18T18:40:00Z",
+					"endTime": "2026-06-19T18:40:00Z",
+					"delay": "00:00:00",
+					"maxConcurrency": 50,
+					"retryPolicy": {
+						"intervalInSeconds": 30
+					},
+					"dependsOn": []
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipelineaggregate')]"
+			]
 		}
 	]
 }
