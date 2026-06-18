@@ -13,7 +13,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "AzureSalesdb",
+						"referenceName": "csvread",
 						"type": "DatasetReference"
 					},
 					"name": "CustomerAddressCsv"
@@ -49,10 +49,13 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> CustomerFromSql",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          {\"customer_key\";\"customer_id\";\"first_name\";\"last_name\";\"gender\";\"email\";\"phone\";\"country\";\"state\";\"city\";\"join_date\"} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table',",
+				"     limit: 100,",
+				"     ignoreNoFilesFound: false,",
 				"     dateFormats: ['yyyy/MM/dd'],",
 				"     timestampFormats: ['yyyy-MM-dd\\'T\\'HH:mm:ss'],",
 				"     preferredIntegralType: 'long',",
