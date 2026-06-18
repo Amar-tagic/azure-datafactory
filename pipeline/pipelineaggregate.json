@@ -1,5 +1,5 @@
 {
-	"name": "pipelinejoin",
+	"name": "pipelineaggregate",
 	"properties": {
 		"activities": [
 			{
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "CustomerJoinSqlCsvSort",
+						"referenceName": "ProductCsvAggregate",
 						"type": "DataFlowReference"
 					},
 					"compute": {
