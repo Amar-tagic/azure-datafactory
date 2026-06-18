@@ -6,19 +6,20 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "pipelinejoin",
+					"referenceName": "pipelinejoinjson",
 					"type": "PipelineReference"
 				}
 			}
 		],
-		"type": "ScheduleTrigger",
+		"type": "BlobEventsTrigger",
 		"typeProperties": {
-			"recurrence": {
-				"frequency": "Minute",
-				"interval": 1,
-				"startTime": "2026-06-18T17:49:00",
-				"timeZone": "India Standard Time"
-			}
+			"blobPathBeginsWith": "/salescsv/blobs/csvin/",
+			"blobPathEndsWith": "csvin",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/a415c409-808a-467a-a4ac-d1a5ae732b8f/resourceGroups/RG-adf-practice/providers/Microsoft.Storage/storageAccounts/storageamarazureproject",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
 		}
 	}
 }
