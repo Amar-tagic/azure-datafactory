@@ -10,8 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "dim_customer.csv",
-				"container": "salesclassic"
+				"fileName": "customer.csv",
+				"folderPath": "csvinput",
+				"container": "salescsv"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

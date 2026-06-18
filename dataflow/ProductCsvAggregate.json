@@ -45,7 +45,7 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
-				"source1 filter(ERROR_FUNCTION('productLine =__SINGLE_QUOTE__Motorcycles__SINGLE_QUOTE__')) ~> filter1",
+				"source1 filter(equals(productLine,\"Motorcycles\")) ~> filter1",
 				"filter1 aggregate(groupBy(productName),",
 				"     buyPrice = max(buyPrice)) ~> aggregate1",
 				"aggregate1 sink(allowSchemaDrift: true,",
