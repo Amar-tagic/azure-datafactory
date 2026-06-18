@@ -223,6 +223,9 @@
 					},
 					"product_sales_read_properties_typeProperties_url": {
 						"value": "[parameters('product_sales_read_properties_typeProperties_url')]"
+					},
+					"triggerjson_properties_typeProperties_scope": {
+						"value": "[parameters('triggerjson_properties_typeProperties_scope')]"
 					}
 				}
 			},
@@ -261,9 +264,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"triggerjson_properties_typeProperties_scope": {
-						"value": "[parameters('triggerjson_properties_typeProperties_scope')]"
 					},
 					"triggerjoin_properties_typeProperties_scope": {
 						"value": "[parameters('triggerjoin_properties_typeProperties_scope')]"
