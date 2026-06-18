@@ -6,14 +6,14 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "AzureSalesOrder",
+						"referenceName": "sales_product_read",
 						"type": "DatasetReference"
 					},
-					"name": "CustomerFromSql"
+					"name": "productFromcsv"
 				},
 				{
 					"dataset": {
-						"referenceName": "csvread",
+						"referenceName": "csv_read_sales_input_customer",
 						"type": "DatasetReference"
 					},
 					"name": "CustomerAddressCsv"
@@ -37,20 +37,33 @@
 			],
 			"scriptLines": [
 				"source(output(",
-				"          orderNumber as integer,",
-				"          orderDate as date,",
-				"          requiredDate as date,",
-				"          shippedDate as date,",
-				"          status as string,",
-				"          comments as string,",
-				"          customerNumber as integer",
+				"          productCode as string,",
+				"          productName as string,",
+				"          productLine as string,",
+				"          productScale as string,",
+				"          productVendor as string,",
+				"          productDescription as string,",
+				"          quantityInStock as string,",
+				"          buyPrice as string,",
+				"          MSRP as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> CustomerFromSql",
+				"     ignoreNoFilesFound: false) ~> productFromcsv",
 				"source(output(",
-				"          {\"customer_key\";\"customer_id\";\"first_name\";\"last_name\";\"gender\";\"email\";\"phone\";\"country\";\"state\";\"city\";\"join_date\"} as string",
+				"          customerNumber as long,",
+				"          customerName as string,",
+				"          contactLastName as string,",
+				"          contactFirstName as string,",
+				"          phone as string,",
+				"          addressLine1 as string,",
+				"          addressLine2 as string,",
+				"          city as string,",
+				"          state as string,",
+				"          postalCode as string,",
+				"          country as string,",
+				"          salesRepEmployeeNumber as string,",
+				"          creditLimit as float",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -60,7 +73,7 @@
 				"     timestampFormats: ['yyyy-MM-dd\\'T\\'HH:mm:ss'],",
 				"     preferredIntegralType: 'long',",
 				"     preferredFractionalType: 'float') ~> CustomerAddressCsv",
-				"CustomerFromSql join(customerNumber == ERROR_FUNCTION(''),",
+				"productFromcsv join(customerNumber == ERROR_FUNCTION(''),",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",

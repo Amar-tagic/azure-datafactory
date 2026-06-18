@@ -1,0 +1,61 @@
+{
+	"name": "sales_product_read",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "product_sales_read",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "product.csv",
+				"folderPath": "csvinput",
+				"fileSystem": "salescsv"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "productCode",
+				"type": "String"
+			},
+			{
+				"name": "productName",
+				"type": "String"
+			},
+			{
+				"name": "productLine",
+				"type": "String"
+			},
+			{
+				"name": "productScale",
+				"type": "String"
+			},
+			{
+				"name": "productVendor",
+				"type": "String"
+			},
+			{
+				"name": "productDescription",
+				"type": "String"
+			},
+			{
+				"name": "quantityInStock",
+				"type": "String"
+			},
+			{
+				"name": "buyPrice",
+				"type": "String"
+			},
+			{
+				"name": "MSRP",
+				"type": "String"
+			}
+		]
+	}
+}
