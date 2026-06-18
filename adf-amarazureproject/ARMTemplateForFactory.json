@@ -2214,8 +2214,7 @@
 					"ignoreEmptyBlobs": true,
 					"scope": "[parameters('triggerjson_properties_typeProperties_scope')]",
 					"events": [
-						"Microsoft.Storage.BlobCreated",
-						"Microsoft.Storage.BlobDeleted"
+						"Microsoft.Storage.BlobCreated"
 					]
 				}
 			},
