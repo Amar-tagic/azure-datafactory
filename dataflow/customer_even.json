@@ -18,7 +18,11 @@
 						"referenceName": "DelimitedText1",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "sink1",
+					"rejectedDataLinkedService": {
+						"referenceName": "AzureBlobStorage2",
+						"type": "LinkedServiceReference"
+					}
 				}
 			],
 			"transformations": [
@@ -30,8 +34,7 @@
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'select * from dbo.customers',",
-				"     format: 'query') ~> source1",
+				"     format: 'table') ~> source1",
 				"source1 filter(customerNumber % 2 == 0) ~> filter1",
 				"filter1 sink(allowSchemaDrift: false,",
 				"     validateSchema: false,",
