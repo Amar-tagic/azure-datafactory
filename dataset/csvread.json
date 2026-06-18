@@ -1,0 +1,28 @@
+{
+	"name": "csvread",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "dim_customer.csv",
+				"container": "salesclassic"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "\"customer_key\";\"customer_id\";\"first_name\";\"last_name\";\"gender\";\"email\";\"phone\";\"country\";\"state\";\"city\";\"join_date\"",
+				"type": "String"
+			}
+		]
+	}
+}

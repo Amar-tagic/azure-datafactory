@@ -1,0 +1,58 @@
+{
+	"name": "AzureSalesproduct",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSalesConnect",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "productCode",
+				"type": "varchar"
+			},
+			{
+				"name": "productName",
+				"type": "varchar"
+			},
+			{
+				"name": "productLine",
+				"type": "varchar"
+			},
+			{
+				"name": "productScale",
+				"type": "varchar"
+			},
+			{
+				"name": "productVendor",
+				"type": "varchar"
+			},
+			{
+				"name": "productDescription",
+				"type": "varchar"
+			},
+			{
+				"name": "quantityInStock",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "buyPrice",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "MSRP",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "products"
+		}
+	}
+}

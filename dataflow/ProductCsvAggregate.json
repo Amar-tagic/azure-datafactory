@@ -5,11 +5,19 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "AzureSalesproduct",
+						"type": "DatasetReference"
+					},
 					"name": "source1"
 				}
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
 					"name": "sink1"
 				}
 			],
@@ -22,10 +30,24 @@
 				}
 			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1",
-				"source1 filter(ERROR_FUNCTION('')) ~> filter1",
-				"filter1 aggregate() ~> aggregate1",
+				"source(output(",
+				"          productCode as string,",
+				"          productName as string,",
+				"          productLine as string,",
+				"          productScale as string,",
+				"          productVendor as string,",
+				"          productDescription as string,",
+				"          quantityInStock as integer,",
+				"          buyPrice as decimal(10,2),",
+				"          MSRP as decimal(10,2)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 filter(ERROR_FUNCTION('productLine =__SINGLE_QUOTE__Motorcycles__SINGLE_QUOTE__')) ~> filter1",
+				"filter1 aggregate(groupBy(productName),",
+				"     buyPrice = max(buyPrice)) ~> aggregate1",
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",

@@ -12,12 +12,24 @@
 					"name": "source1"
 				},
 				{
+					"dataset": {
+						"referenceName": "AzureSalesOrder",
+						"type": "DatasetReference"
+					},
 					"name": "source2"
 				}
 			],
 			"sinks": [
 				{
-					"name": "sinkAsJson"
+					"dataset": {
+						"referenceName": "Jsonjoinoutput",
+						"type": "DatasetReference"
+					},
+					"name": "sinkAsJson",
+					"rejectedDataLinkedService": {
+						"referenceName": "AzureBlobStorage2",
+						"type": "LinkedServiceReference"
+					}
 				}
 			],
 			"transformations": [
@@ -45,10 +57,21 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source2",
-				"source1 join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
-				"     joinType:'inner',",
+				"source(output(",
+				"          orderNumber as integer,",
+				"          orderDate as date,",
+				"          requiredDate as date,",
+				"          shippedDate as date,",
+				"          status as string,",
+				"          comments as string,",
+				"          customerNumber as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source2",
+				"source1, source2 join(source1@customerNumber == source2@customerNumber,",
+				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
