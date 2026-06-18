@@ -1,0 +1,47 @@
+{
+	"name": "AzureSalesOrder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSalesConnect",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "orderNumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "orderDate",
+				"type": "date"
+			},
+			{
+				"name": "requiredDate",
+				"type": "date"
+			},
+			{
+				"name": "shippedDate",
+				"type": "date"
+			},
+			{
+				"name": "status",
+				"type": "varchar"
+			},
+			{
+				"name": "comments",
+				"type": "varchar"
+			},
+			{
+				"name": "customerNumber",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "orders"
+		}
+	}
+}

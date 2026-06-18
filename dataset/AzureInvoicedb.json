@@ -1,0 +1,12 @@
+{
+	"name": "AzureInvoicedb",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureInvoiceConnect",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}

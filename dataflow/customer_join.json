@@ -5,6 +5,10 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "AzureSalesdb",
+						"type": "DatasetReference"
+					},
 					"name": "source1"
 				},
 				{
@@ -22,8 +26,25 @@
 				}
 			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1",
+				"source(output(",
+				"          customerNumber as integer,",
+				"          customerName as string,",
+				"          contactLastName as string,",
+				"          contactFirstName as string,",
+				"          phone as string,",
+				"          addressLine1 as string,",
+				"          addressLine2 as string,",
+				"          city as string,",
+				"          state as string,",
+				"          postalCode as string,",
+				"          country as string,",
+				"          salesRepEmployeeNumber as integer,",
+				"          creditLimit as decimal(10,2)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false) ~> source2",
 				"source1 join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
