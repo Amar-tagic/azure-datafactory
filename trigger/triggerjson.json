@@ -15,7 +15,7 @@
 		"typeProperties": {
 			"blobPathBeginsWith": "/salescsv/blobs/csvin",
 			"blobPathEndsWith": "csvin",
-			"ignoreEmptyBlobs": false,
+			"ignoreEmptyBlobs": true,
 			"scope": "/subscriptions/a415c409-808a-467a-a4ac-d1a5ae732b8f/resourceGroups/RG-adf-practice/providers/Microsoft.Storage/storageAccounts/storageamarazureproject",
 			"events": [
 				"Microsoft.Storage.BlobCreated",
