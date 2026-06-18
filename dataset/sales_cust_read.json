@@ -1,0 +1,77 @@
+{
+	"name": "sales_cust_read",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage3",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "customer.csv",
+				"folderPath": "csvinput",
+				"fileSystem": "salescsv"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "customerNumber",
+				"type": "String"
+			},
+			{
+				"name": "customerName",
+				"type": "String"
+			},
+			{
+				"name": "contactLastName",
+				"type": "String"
+			},
+			{
+				"name": "contactFirstName",
+				"type": "String"
+			},
+			{
+				"name": "phone",
+				"type": "String"
+			},
+			{
+				"name": "addressLine1",
+				"type": "String"
+			},
+			{
+				"name": "addressLine2",
+				"type": "String"
+			},
+			{
+				"name": "city",
+				"type": "String"
+			},
+			{
+				"name": "state",
+				"type": "String"
+			},
+			{
+				"name": "postalCode",
+				"type": "String"
+			},
+			{
+				"name": "country",
+				"type": "String"
+			},
+			{
+				"name": "salesRepEmployeeNumber",
+				"type": "String"
+			},
+			{
+				"name": "creditLimit",
+				"type": "String"
+			}
+		]
+	}
+}

@@ -13,7 +13,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "csv_read_sales_input_customer",
+						"referenceName": "sales_cust_read",
 						"type": "DatasetReference"
 					},
 					"name": "CustomerAddressCsv"
@@ -77,7 +77,7 @@
 				"     timestampFormats: ['yyyy-MM-dd\\'T\\'HH:mm:ss'],",
 				"     preferredIntegralType: 'long',",
 				"     preferredFractionalType: 'float') ~> CustomerAddressCsv",
-				"productFromcsv join(customerNumber == ERROR_FUNCTION(''),",
+				"productFromcsv join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
