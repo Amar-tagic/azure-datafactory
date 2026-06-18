@@ -6,16 +6,55 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-amarazureproject"
-		},
-		"triggerjoin_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/a415c409-808a-467a-a4ac-d1a5ae732b8f/resourceGroups/RG-adf-practice/providers/Microsoft.Storage/storageAccounts/storageamarazureproject"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Json_dynamic')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"container": {
+						"type": "string"
+					},
+					"folder": {
+						"type": "string"
+					},
+					"file": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().file",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().folder",
+							"type": "Expression"
+						},
+						"fileSystem": {
+							"value": "@dataset().container",
+							"type": "Expression"
+						}
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Jsonjoinoutput')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -30,6 +69,28 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Jsonwrite')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStoreJson",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "jsonoutput",
+						"fileSystem": "salescsv"
 					}
 				},
 				"schema": {}
@@ -731,7 +792,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Parquet_dynamic')]"
+				"[concat(variables('factoryId'), '/datasets/Parquet_dynamic')]",
+				"[concat(variables('factoryId'), '/datasets/Json_dynamic')]"
 			]
 		},
 		{
@@ -1060,7 +1122,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Parquet_dynamic')]"
+				"[concat(variables('factoryId'), '/datasets/Parquet_dynamic')]",
+				"[concat(variables('factoryId'), '/datasets/Json_dynamic')]"
 			]
 		},
 		{
@@ -1436,7 +1499,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Parquet_dynamic')]"
+				"[concat(variables('factoryId'), '/datasets/Parquet_dynamic')]",
+				"[concat(variables('factoryId'), '/datasets/Json_dynamic')]"
 			]
 		},
 		{
@@ -1533,6 +1597,102 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/sales_product_read')]",
 				"[concat(variables('factoryId'), '/datasets/Parquetwritesales')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CustomerJoinSqlSortJson')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "sales_product_read",
+								"type": "DatasetReference"
+							},
+							"name": "productFromcsv"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSalesproduct",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Jsonwrite",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "join1"
+						},
+						{
+							"name": "filter1"
+						},
+						{
+							"name": "sort1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          productCode as string,",
+						"          productName as string,",
+						"          productLine as string,",
+						"          productScale as string,",
+						"          productVendor as string,",
+						"          productDescription as string,",
+						"          quantityInStock as string,",
+						"          buyPrice as string,",
+						"          MSRP as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> productFromcsv",
+						"source(output(",
+						"          productCode as string,",
+						"          productName as string,",
+						"          productLine as string,",
+						"          productScale as string,",
+						"          productVendor as string,",
+						"          productDescription as string,",
+						"          quantityInStock as integer,",
+						"          buyPrice as decimal(10,2),",
+						"          MSRP as decimal(10,2)",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"productFromcsv, source1 join(productFromcsv@productName == source1@productName,",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join1 filter(like('productLine', 'MotorCycles')) ~> filter1",
+						"filter1 sort(asc(productFromcsv@productCode, true)) ~> sort1",
+						"sort1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     format: 'parquet') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/sales_product_read')]",
+				"[concat(variables('factoryId'), '/datasets/Jsonwrite')]"
 			]
 		},
 		{
@@ -1846,64 +2006,50 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/trigger1')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
+			"name": "[concat(parameters('factoryName'), '/pipelinejoinjson')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
+				"activities": [
 					{
-						"pipelineReference": {
-							"referenceName": "pipelinejoin",
-							"type": "PipelineReference"
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
 						},
-						"parameters": {}
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "CustomerJoinSqlSortJson",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"productFromcsv": {},
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Minute",
-						"interval": 1,
-						"startTime": "2026-06-18T17:49:00",
-						"timeZone": "India Standard Time"
-					}
-				}
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipelinejoin')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/triggerjoin')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "pipelinejoin",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/salescsv/blobs/csvin",
-					"blobPathEndsWith": "csvin",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('triggerjoin_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipelinejoin')]"
+				"[concat(variables('factoryId'), '/dataflows/CustomerJoinSqlSortJson')]"
 			]
 		}
 	]

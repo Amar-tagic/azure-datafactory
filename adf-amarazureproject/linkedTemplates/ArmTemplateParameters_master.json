@@ -20,6 +20,9 @@
 		"AzureDataLakeStorage3_accountKey": {
 			"value": ""
 		},
+		"AzureDataLakeStoreJson_accountKey": {
+			"value": ""
+		},
 		"AzureInvoiceConnect_password": {
 			"value": ""
 		},
@@ -42,6 +45,9 @@
 			"value": "https://storageamarazureproject.dfs.core.windows.net/"
 		},
 		"AzureDataLakeStorage3_properties_typeProperties_url": {
+			"value": "https://storageamarazureproject.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStoreJson_properties_typeProperties_url": {
 			"value": "https://storageamarazureproject.dfs.core.windows.net/"
 		},
 		"AzureInvoiceConnect_properties_typeProperties_server": {
@@ -76,6 +82,9 @@
 		},
 		"product_sales_read_properties_typeProperties_url": {
 			"value": "https://storageamarazureproject.dfs.core.windows.net/"
+		},
+		"triggerjson_properties_typeProperties_scope": {
+			"value": "/subscriptions/a415c409-808a-467a-a4ac-d1a5ae732b8f/resourceGroups/RG-adf-practice/providers/Microsoft.Storage/storageAccounts/storageamarazureproject"
 		},
 		"triggerjoin_properties_typeProperties_scope": {
 			"value": "/subscriptions/a415c409-808a-467a-a4ac-d1a5ae732b8f/resourceGroups/RG-adf-practice/providers/Microsoft.Storage/storageAccounts/storageamarazureproject"

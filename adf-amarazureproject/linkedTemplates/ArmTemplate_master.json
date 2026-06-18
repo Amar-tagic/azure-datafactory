@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage3'"
 		},
+		"AzureDataLakeStoreJson_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStoreJson'"
+		},
 		"AzureInvoiceConnect_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureInvoiceConnect'"
@@ -56,6 +60,10 @@
 			"defaultValue": "https://storageamarazureproject.dfs.core.windows.net/"
 		},
 		"AzureDataLakeStorage3_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageamarazureproject.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStoreJson_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storageamarazureproject.dfs.core.windows.net/"
 		},
@@ -103,6 +111,10 @@
 			"type": "string",
 			"defaultValue": "https://storageamarazureproject.dfs.core.windows.net/"
 		},
+		"triggerjson_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/a415c409-808a-467a-a4ac-d1a5ae732b8f/resourceGroups/RG-adf-practice/providers/Microsoft.Storage/storageAccounts/storageamarazureproject"
+		},
 		"triggerjoin_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/a415c409-808a-467a-a4ac-d1a5ae732b8f/resourceGroups/RG-adf-practice/providers/Microsoft.Storage/storageAccounts/storageamarazureproject"
@@ -149,6 +161,9 @@
 					"AzureDataLakeStorage3_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage3_accountKey')]"
 					},
+					"AzureDataLakeStoreJson_accountKey": {
+						"value": "[parameters('AzureDataLakeStoreJson_accountKey')]"
+					},
 					"AzureInvoiceConnect_password": {
 						"value": "[parameters('AzureInvoiceConnect_password')]"
 					},
@@ -172,6 +187,9 @@
 					},
 					"AzureDataLakeStorage3_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage3_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStoreJson_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStoreJson_properties_typeProperties_url')]"
 					},
 					"AzureInvoiceConnect_properties_typeProperties_server": {
 						"value": "[parameters('AzureInvoiceConnect_properties_typeProperties_server')]"
@@ -223,6 +241,29 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-amarazureproject_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "adf-amarazureproject_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"triggerjson_properties_typeProperties_scope": {
+						"value": "[parameters('triggerjson_properties_typeProperties_scope')]"
 					},
 					"triggerjoin_properties_typeProperties_scope": {
 						"value": "[parameters('triggerjoin_properties_typeProperties_scope')]"
@@ -230,7 +271,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'adf-amarazureproject_ArmTemplate_0')]"
+				"[resourceId('Microsoft.Resources/deployments', 'adf-amarazureproject_ArmTemplate_1')]"
 			]
 		}
 	]
