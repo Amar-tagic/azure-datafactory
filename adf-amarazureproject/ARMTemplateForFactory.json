@@ -2211,7 +2211,7 @@
 				"typeProperties": {
 					"blobPathBeginsWith": "/salescsv/blobs/csvin",
 					"blobPathEndsWith": "csvin",
-					"ignoreEmptyBlobs": true,
+					"ignoreEmptyBlobs": false,
 					"scope": "[parameters('triggerjson_properties_typeProperties_scope')]",
 					"events": [
 						"Microsoft.Storage.BlobCreated",
