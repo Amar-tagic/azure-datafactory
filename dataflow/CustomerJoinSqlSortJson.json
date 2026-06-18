@@ -1,0 +1,90 @@
+{
+	"name": "CustomerJoinSqlSortJson",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "sales_product_read",
+						"type": "DatasetReference"
+					},
+					"name": "productFromcsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSalesproduct",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Jsonwrite",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "sort1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          productCode as string,",
+				"          productName as string,",
+				"          productLine as string,",
+				"          productScale as string,",
+				"          productVendor as string,",
+				"          productDescription as string,",
+				"          quantityInStock as string,",
+				"          buyPrice as string,",
+				"          MSRP as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> productFromcsv",
+				"source(output(",
+				"          productCode as string,",
+				"          productName as string,",
+				"          productLine as string,",
+				"          productScale as string,",
+				"          productVendor as string,",
+				"          productDescription as string,",
+				"          quantityInStock as integer,",
+				"          buyPrice as decimal(10,2),",
+				"          MSRP as decimal(10,2)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"productFromcsv, source1 join(productFromcsv@productName == source1@productName,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 filter(like('productLine', 'MotorCycles')) ~> filter1",
+				"filter1 sort(asc(productFromcsv@productCode, true)) ~> sort1",
+				"sort1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     format: 'parquet') ~> sink1"
+			]
+		}
+	}
+}

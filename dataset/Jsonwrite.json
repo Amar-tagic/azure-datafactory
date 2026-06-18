@@ -1,0 +1,19 @@
+{
+	"name": "Jsonwrite",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStoreJson",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "jsonoutput",
+				"fileSystem": "salescsv"
+			}
+		},
+		"schema": {}
+	}
+}
